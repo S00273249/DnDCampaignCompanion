@@ -1,5 +1,7 @@
 package ie.daniel.dndcampaigncompanion.feature.dice.domain
 
+// An enum class defines a fixed set of available dice types.
+// Each type stores its number of sides and the name displayed in the app.
 enum class DiceType(
     val sides: Int,
     val displayName: String

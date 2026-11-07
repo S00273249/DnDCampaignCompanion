@@ -104,4 +104,40 @@ class DiceRollerTest {
 
         Assert.assertEquals(configuration, result.configuration)
     }
+
+
+    @Test
+    fun `roll calculates subtotal from individual dice results`() {
+        val configuration = RollConfiguration(
+            diceSelections = listOf(
+                DiceSelection(DiceType.D6, 3),
+                DiceSelection(DiceType.D20, 2)
+            )
+        )
+
+        val result = diceRoller.roll(configuration)
+
+        val expectedSubtotal = result.individualResults.sumOf { it.value }
+
+        Assert.assertEquals(
+            expectedSubtotal,
+            result.subtotal
+        )
+    }
+
+    @Test
+    fun `roll with zero modifier leaves subtotal unchanged`() {
+        val configuration = RollConfiguration(
+            diceSelections = listOf(
+                DiceSelection(DiceType.D8, 2)
+            ),
+            modifier = 0
+        )
+
+        val result = diceRoller.roll(configuration)
+
+        Assert.assertEquals(0, result.modifier)
+        Assert.assertEquals(result.subtotal, result.total)
+    }
+
 }
